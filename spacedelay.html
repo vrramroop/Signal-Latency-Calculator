@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> Signal Latency Calculator </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+        *{
+            margin: 0;
+            font-family: Helvetica;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 115vh;
+            background: url("images/background.jpg")no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .bigtext{
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+            color: white;
+        }
+        #heading{
+            background: linear-gradient(to bottom right, #85858515, #42424215, #14141415, #38383815);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid #ffffff20;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 #ffffff30;
+            padding: 20px;
+            margin: 20px;
+            top: 3%;
+            position: absolute;
+            width: 50%;
+        }
+        #big{
+            background: linear-gradient(to bottom right, #85858515, #42424215, #14141415, #38383815);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid #ffffff20;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 #ffffff30;
+            padding: 20px;
+            margin: 20px;
+            width: 75%;
+            max-width: 800px;
+            top: 30%;
+            position: absolute;
+            height: auto;
+        }
+        .inputstuff{
+            margin-bottom: 20px;
+        }
+        p, label{
+            display: block;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+        }
+        input, select{
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            background: linear-gradient(to bottom right, #85858515, #42424215, #14141415, #38383815);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid #ffffff20;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 #ffffff30;
+            color: white;
+            transition: 0.3s;
+            outline: none;
+        }
+        input:focus, select:focus{
+            border-color: #00ccff;
+        }
+        #results{
+            margin-top: 25px;
+            padding-top: 20px;
+        }
+        .actualresults{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+        @keyframes importanttext {
+            0% {color: white; opacity: 1;}
+            50% {color: rgb(196, 196, 196); opacity: 0.6;}
+            100% {color: white; opacity: 1;}
+        }
+        .important{
+            animation: importanttext 1s infinite ease-out;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+        #timerstuff{
+            background: linear-gradient(to bottom right, #85858515, #42424215, #14141415, #38383815);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid #ffffff20;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 #ffffff30;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            font-weight: bold;
+            padding: 5px;
+            line-height: 1;
+        }
+        #sendtime{
+            font-size: 2rem;
+            margin: 0;
+            line-height: 1;
+        }
+        .actualresultsstyling{
+            background: linear-gradient(to bottom right, #85858515, #42424215, #14141415, #38383815);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid #ffffff20;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 #ffffff30;
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="bigtext" id="heading">Signal Latency Calculator</div>
+        <div id="big">
+            <div id="distanceselectdiv" class="inputstuff">
+                <p>Choose Distance (Custom or Preset)</p>
+                <select class="selectstuff" id="distanceselect">
+                    <option>[Select]</option>
+                    <option value="384400">Moon [384,400 km]</option>
+                    <option value="225000000">Mars (average distance) [225 million km]</option>
+                    <option value="24000000000">Voyager 1 [24 Billion km]</option>
+                    <option value="custom">Custom [km]</option>
+                </select>
+                <input type="number" id="customdistance" placeholder="Custom Distance in km" style="display: none;">
+            </div>
+            <div class="inputstuff" id="devicedelay">
+                <label>Device Processing Delay (in Seconds)</label>
+                <input type="number" id="devicedelaytime" value="5" min="0">
+            </div>
+            <div id="timer" class="inputstuff">
+                <label>Desired Execution Time [local time]</label>
+                <input type="time" id="targettime">
+            </div>
+            <div id="results">
+                <div class="actualresults actualresultsstyling">One Way Latency:
+                    <p id="pingoutput" class="important">0</p>
+                </div>
+
+                <div class="actualresults actualresultsstyling">Round Trip Latency:
+                    <p id="roundtriptimeoutput" class="important">0</p>
+                </div>
+
+                <div id="timerstuff">Click Send at
+                    <p class="important" id="sendtime">--:--</p>
+                    for the signal to reach in time!
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const speedoflight = 299792 //km per second. it is the speed of light because all electromagnetic waves (including radio waves) travel at this speed.
+        function calculateeverything() {
+            let distvalue = document.getElementById('distanceselect').value
+            let dist = 0
+
+            if (distvalue === "custom") {
+                dist = parseFloat(document.getElementById("customdistance").value) || 0;
+            }   else {
+                dist = parseFloat(distvalue) || 0;
+            }
+
+            const devicedelaytime = parseFloat(document.getElementById('devicedelaytime').value) || 0;
+            const targettime = document.getElementById('targettime')
+
+
+            if (dist>0) {
+                const onewayseconds = dist/speedoflight;
+                const roundtriptimeseconds = (onewayseconds * 2) + devicedelaytime;
+
+                document.getElementById("pingoutput").innerText = formationtimethingy(onewayseconds)
+                document.getElementById("roundtriptimeoutput").innerText = formationtimethingy(roundtriptimeseconds)
+                
+                if (targettime) {
+                    let [hours, minutes] = targettime.value.split(':')
+                    let date = new Date();
+                    date.setHours(hours, parseInt(minutes), 0);
+                    let senddate = new Date(date.getTime() - ((onewayseconds+devicedelaytime)*1000));
+                    document.getElementById('sendtime').innerText = senddate.toLocaleTimeString();
+                }
+            }
+        }
+        function formationtimethingy(secs) {
+            if (secs < 60) return secs.toFixed(2) + "secs";
+            return (secs/60).toFixed(2) + " minutes";
+        }
+        document.getElementById('distanceselect').addEventListener('change', function() {
+            document.getElementById('customdistance').style.display = (this.value === 'custom') ? 'block' : 'none';
+            calculateeverything();
+        });
+        document.querySelectorAll('input').forEach(i => i.addEventListener('input', calculateeverything));
+    </script>
+</body>
+</html>
