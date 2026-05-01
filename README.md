@@ -4,7 +4,7 @@
 <p>https://science.nasa.gov/mission/webb/multimedia/images/#2025-Images</p>
 
 
-<h2>Demo:</h2>
+<h2>Demo: vrramroop.github.io/Signal-Latency-Calculator/ </h2>
 
 
 <h3>Overview: By inputting the distance (either preset or custom), the time it takes to process the command on the device in space, and (optional) the time you want the signal to reach at, you will receive the following:
