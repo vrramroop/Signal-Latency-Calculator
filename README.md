@@ -17,7 +17,7 @@
 
 <h3> Information: To ensure the code works properly, please ensure that you input the following parameters: </h3>
 <strong>WRITE NUMBERS ONLY</strong>
-<p>If you dont want an error with the date, input a time.</p>
+<p>If you dont want an error with the date, input a time (am or pm obv).</p>
 
 
 <h3>Notes:</h3>
