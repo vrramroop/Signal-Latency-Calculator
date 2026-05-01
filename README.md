@@ -21,6 +21,6 @@
 
 
 <h3>Notes:</h3>
-Entering 0 for any resource puts the Emergency line. 
+Not entering a time gives an error, but its optional.
 The calculator uses the speed of light in km per second. It is the speed of light because all electromagnetic waves (including radio waves) travel at this speed.
 There are some inconsistencies with the upload times for the index.html and the other stuff, thats because I was rushing to ship the project as its the end of flavortown.
